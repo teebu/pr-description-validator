@@ -4,7 +4,7 @@ Want to provide some standards on your project? The pull request validator is he
 
 # Example Usage
 
-Here's an example of where we want our pull request description to have 
+Here's an example of where we want our pull request description to have. 
 
 ```yaml
 name: "PR Validator"
@@ -22,6 +22,7 @@ jobs:
       - name: Validate Issues Description with changelog
         uses: teebu/pr-description-validator@main
         with: 
+          # optional defaults
           add_to_changelog_pattern: "\|[ ]+add to changelog[ ]+\|[ ]+(`?yes`?)[ ]+\||\|[ ]+add to changelog[ ]+\|[ ]+(`?no`?)[ ]+\|"
           changelog_pattern: "\|[ ]*Changelog Text[ ]*\|[ ]*(\`?[\w\s<>]*\`?)[ ]*\|"
           default_changelog_text: "`<What would you write for the end user to understand the change>`"
