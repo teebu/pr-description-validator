@@ -1,10 +1,19 @@
-name: 'PR Title Validator'
-description: 'Check your pull request titles'
-author: 'David Bour'
+name: 'PR Description Validator'
+description: 'Check your pull request description for valid changelog strings'
+author: 'Teebu'
 inputs:
-  pattern:
-    required: true
-    description: "A RegEx pattern. Don't forget to escape when needed!"
+  add_to_changelog_pattern:
+    required: false
+    default: '\\|[ ]+add to changelog[ ]+\\|[ ]+(`?yes`?)[ ]+\\||\\|[ ]+add to changelog[ ]+\\|[ ]+(`?no`?)[ ]+\\|'
+    description: "Should add to changelog option: YES or NO"
+  changelog_pattern:
+    required: false
+    default: "\|[ ]*Changelog Text[ ]*\|[ ]*(\`?[\w\s<>]*\`?)[ ]*\|"
+    description: "Changelog description regex"
+  min_acceptable_changelog_string:
+    required: false
+    default: "20"
+    description: "A minimum length of changelog string"
 runs:
   using: 'node12'
   main: 'dist/index.js'

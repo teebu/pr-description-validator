@@ -39,12 +39,24 @@ const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const validator_1 = __nccwpck_require__(4618);
 function run() {
-    var _a;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const input = core.getInput('pattern');
-            if (!(0, validator_1.isValidTitle)((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.title, input)) {
-                throw new Error('Pull request title did not match the provided pattern.');
+            const min_acceptable_changelog_string = core.getInput('min_acceptable_changelog_string');
+            const add_to_changelog_pattern = core.getInput('add_to_changelog_pattern');
+            if (!(0, validator_1.reFound)((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.body, add_to_changelog_pattern)) {
+                throw new Error('Pull request description missing YES or NO option for add to changelog.');
+            }
+            const changelog_pattern = core.getInput('changelog_pattern');
+            const match = (0, validator_1.reMatch)((_b = github.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.body, changelog_pattern);
+            if (match) {
+                if (match === '`What would you write for the end user to understand the change`') {
+                    throw new Error('Pull request description found default changelog string.');
+                }
+                else if (match[1].length < parseInt(min_acceptable_changelog_string)) {
+                    // minimum acceptable string length
+                    throw new Error('Pull request changelog string too short.');
+                }
             }
         }
         catch (error) {
@@ -63,12 +75,18 @@ run();
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isValidTitle = void 0;
-function isValidTitle(input, pattern) {
-    const regexPat = new RegExp(pattern);
+exports.reMatch = exports.reFound = void 0;
+function reFound(input = '', pattern) {
+    const regexPat = new RegExp(pattern, 'i');
     return input.search(regexPat) !== -1;
 }
-exports.isValidTitle = isValidTitle;
+exports.reFound = reFound;
+function reMatch(input = '', pattern) {
+    const regexPat = new RegExp(pattern, 'i');
+    const match = input.match(regexPat);
+    return match && match[1].trim();
+}
+exports.reMatch = reMatch;
 
 
 /***/ }),
