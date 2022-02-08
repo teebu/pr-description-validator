@@ -39,16 +39,22 @@ const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const validator_1 = __nccwpck_require__(4618);
 function run() {
-    var _a, _b, _c;
+    var _a, _b, _c, _d;
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const min_acceptable_changelog_string = core.getInput('min_acceptable_changelog_string');
+            const default_description_text = core.getInput('default_description_text');
             const add_to_changelog_pattern = core.getInput('add_to_changelog_pattern');
             const default_changelog_text = core.getInput('default_changelog_text');
+            const min_acceptable_changelog_string = core.getInput('min_acceptable_changelog_string');
             let check_default_changelog_string = true;
             console.log('PR BODY:');
             console.log((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.body);
-            let match = (0, validator_1.reMatch)((_b = github.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.body, add_to_changelog_pattern);
+            const found = (0, validator_1.reFound)((_b = github.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.body, default_description_text);
+            if (found) {
+                console.log('found default description');
+                throw new Error('Pull request description using default description text.');
+            }
+            let match = (0, validator_1.reMatch)((_c = github.context.payload.pull_request) === null || _c === void 0 ? void 0 : _c.body, add_to_changelog_pattern);
             if (match) {
                 console.log('add_to_changelog_pattern found match:', match);
                 // don't check default string if should include in changelog is 'NO'
@@ -62,7 +68,7 @@ function run() {
             // check default string if the answer to add to changelog is 'YES'
             if (check_default_changelog_string) {
                 const changelog_pattern = core.getInput('changelog_pattern');
-                match = (0, validator_1.reMatch)((_c = github.context.payload.pull_request) === null || _c === void 0 ? void 0 : _c.body, changelog_pattern);
+                match = (0, validator_1.reMatch)((_d = github.context.payload.pull_request) === null || _d === void 0 ? void 0 : _d.body, changelog_pattern);
                 if (match) {
                     console.log('changelog_pattern found match:', match);
                     if (match === default_changelog_text) {

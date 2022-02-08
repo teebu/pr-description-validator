@@ -4,16 +4,22 @@ import {reFound, reMatch} from './validator'
 
 async function run(): Promise<void> {
   try {
-    const min_acceptable_changelog_string: string = core.getInput('min_acceptable_changelog_string')
+    const default_description_text: string = core.getInput('default_description_text')
     const add_to_changelog_pattern: string = core.getInput('add_to_changelog_pattern')
     const default_changelog_text: string = core.getInput('default_changelog_text')
-
+    const min_acceptable_changelog_string: string = core.getInput('min_acceptable_changelog_string')
     let check_default_changelog_string = true
 
     console.log('PR BODY:')
     console.log(github.context.payload.pull_request?.body)
 
-    let match: string | null = reMatch(github.context.payload.pull_request?.body, add_to_changelog_pattern)
+    const found: string | boolean = reFound(github.context.payload.pull_request?.body, default_description_text)
+    if (found) {
+      console.log('found default description')
+      throw new Error('Pull request description using default description text.')
+    }
+
+    let match = reMatch(github.context.payload.pull_request?.body, add_to_changelog_pattern)
     if (match) {
       console.log('add_to_changelog_pattern found match:', match)
       // don't check default string if should include in changelog is 'NO'

@@ -3,6 +3,7 @@ import {expect, test, describe} from '@jest/globals'
 
 const add_to_changelog_pattern = '\\|[ ]+add to changelog[ ]+\\|[ ]+(`?yes`?|`?no`?)[ ]+\\|'
 const changelog_pattern = '\\|[ ]*Changelog Text[ ]*\\|[ ]*(\\`?[\\w\\s!@#$%:&`\'*+\\/=?^_`(){}<>~,]*\\`?)[ ]*\\|'
+const default_description_test = 'What was changed and why was this change made, what does the reviewer need to know'
 
 describe("Test regex", () => {
   test("it should fail to find valid changelog inclusion (default)", () => {
@@ -113,5 +114,24 @@ describe("Test regex", () => {
 |  Changelog Text   |   Some description        |
 `
     expect(reMatch(inputStr, add_to_changelog_pattern)).toBe('yes')
+  });
+
+  test("it should find default description text", () => {
+    const inputStr = `
+
+## Description:
+
+\`What was changed and why was this change made, what does the reviewer need to know?\`
+`
+    expect(reFound(inputStr, default_description_test)).toBe(true)
+  });
+
+  test("it should not find default description text", () => {
+    const inputStr = `
+## Description:
+
+\`Lots was changed \`
+`
+    expect(reFound(inputStr, default_description_test)).toBe(false)
   });
 });
