@@ -2,7 +2,7 @@ import {reFound, reMatch} from '../src/validator'
 import {expect, test, describe} from '@jest/globals'
 
 const add_to_changelog_pattern = '\\|[ ]+add to changelog[ ]+\\|[ ]+(`?yes`?|`?no`?)[ ]+\\|'
-const changelog_pattern = '\\|[ ]*Changelog Text[ ]*\\|[ ]*(\\`?[\\w\\s<>]*\\`?)[ ]*\\|'
+const changelog_pattern = '\\|[ ]*Changelog Text[ ]*\\|[ ]*(\\`?[\\w\\s!@#$%&\'*+\\/=?^_`(){|}~-]*\\`?)[ ]*\\|'
 
 describe("Test regex", () => {
   test("it should fail to find valid changelog inclusion (default)", () => {

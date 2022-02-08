@@ -27,7 +27,7 @@ async function run(): Promise<void> {
       const changelog_pattern: string = core.getInput('changelog_pattern')
       match = reMatch(github.context.payload.pull_request?.body, changelog_pattern)
       if (match) {
-        console.log('found match:', match)
+        console.log('changelog_pattern found match:', match)
         if (match === default_changelog_text) {
           throw new Error('Pull request description found default changelog string.')
         } else if (match.length < parseInt(min_acceptable_changelog_string)) {

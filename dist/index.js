@@ -63,7 +63,7 @@ function run() {
                 const changelog_pattern = core.getInput('changelog_pattern');
                 match = (0, validator_1.reMatch)((_c = github.context.payload.pull_request) === null || _c === void 0 ? void 0 : _c.body, changelog_pattern);
                 if (match) {
-                    console.log('found match:', match);
+                    console.log('changelog_pattern found match:', match);
                     if (match === default_changelog_text) {
                         throw new Error('Pull request description found default changelog string.');
                     }
