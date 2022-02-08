@@ -10,6 +10,10 @@ inputs:
     required: false
     default: "\\|[ ]*Changelog Text[ ]*\\|[ ]*(\\`?[\\w\\s<>]*\\`?)[ ]*\\|"
     description: "Changelog description regex"
+  default_changelog_text:
+    required: false
+    default: "`<What would you write for the end user to understand the change>`"
+    description: "Default changelog text"
   min_acceptable_changelog_string:
     required: false
     default: "20"
