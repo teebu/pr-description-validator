@@ -53,11 +53,11 @@ function run() {
             const match = (0, validator_1.reMatch)((_c = github.context.payload.pull_request) === null || _c === void 0 ? void 0 : _c.body, changelog_pattern);
             if (match) {
                 console.log('found match:', match);
-                if (match === '`What would you write for the end user to understand the change`') {
+                if (match === `<What would you write for the end user to understand the change>`) {
                     throw new Error('Pull request description found default changelog string.');
                 }
-                else if (match[1].length < parseInt(min_acceptable_changelog_string)) {
-                    // minimum acceptable string length
+                else if (match.length < parseInt(min_acceptable_changelog_string)) {
+                    // needs to meet minimum acceptable string length
                     throw new Error('Pull request changelog string too short.');
                 }
             }
