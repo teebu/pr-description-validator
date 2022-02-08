@@ -44,6 +44,7 @@ function run() {
         try {
             const min_acceptable_changelog_string = core.getInput('min_acceptable_changelog_string');
             const add_to_changelog_pattern = core.getInput('add_to_changelog_pattern');
+            const default_changelog_text = core.getInput('default_changelog_text');
             if (!(0, validator_1.reFound)((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.body, add_to_changelog_pattern)) {
                 throw new Error('Pull request description missing YES or NO option for add to changelog.');
             }
@@ -53,7 +54,7 @@ function run() {
             const match = (0, validator_1.reMatch)((_c = github.context.payload.pull_request) === null || _c === void 0 ? void 0 : _c.body, changelog_pattern);
             if (match) {
                 console.log('found match:', match);
-                if (match === '`<What would you write for the end user to understand the change>`') {
+                if (match === default_changelog_text) {
                     throw new Error('Pull request description found default changelog string.');
                 }
                 else if (match.length < parseInt(min_acceptable_changelog_string)) {
