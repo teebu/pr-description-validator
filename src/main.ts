@@ -18,7 +18,7 @@ async function run(): Promise<void> {
     const match: string | null = reMatch(github.context.payload.pull_request?.body, changelog_pattern)
     if (match) {
       console.log('found match:', match)
-      if (match === `<What would you write for the end user to understand the change>`) {
+      if (match === '`<What would you write for the end user to understand the change>`') {
         throw new Error('Pull request description found default changelog string.')
       } else if (match.length < parseInt(min_acceptable_changelog_string)) {
         // needs to meet minimum acceptable string length
