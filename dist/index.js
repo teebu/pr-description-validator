@@ -58,6 +58,7 @@ function run() {
             else {
                 throw new Error('Pull request description missing YES or NO option for add to changelog.');
             }
+            console.log('find changelog string:', check_default_changelog_string);
             // check default string if the answer to add to changelog is 'YES'
             if (check_default_changelog_string) {
                 const changelog_pattern = core.getInput('changelog_pattern');
