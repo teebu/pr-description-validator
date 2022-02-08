@@ -17,8 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Validate Issues Description with changelog
-      - uses: teebu/pr-description-validator@master
--       with: 
+        uses: teebu/pr-description-validator@main
+        with: 
           add_to_changelog_pattern: "\|[ ]+add to changelog[ ]+\|[ ]+(`?yes`?)[ ]+\||\|[ ]+add to changelog[ ]+\|[ ]+(`?no`?)[ ]+\|"
           changelog_pattern: "\|[ ]*Changelog Text[ ]*\|[ ]*(\`?[\w\s<>]*\`?)[ ]*\|"
           min_acceptable_changelog_string: "20"
