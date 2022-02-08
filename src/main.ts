@@ -34,6 +34,8 @@ async function run(): Promise<void> {
           // needs to meet minimum acceptable string length
           throw new Error('Pull request changelog string too short.')
         }
+      } else {
+        throw new Error('Pull request description error, changelog string not found.')
       }
     }
   } catch (error) {

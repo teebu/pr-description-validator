@@ -24,7 +24,7 @@ jobs:
         with: 
           # optional defaults
           add_to_changelog_pattern: "\\|[ ]+add to changelog[ ]+\\|[ ]+(`?yes`?|`?no`?)[ ]+\\|"
-          changelog_pattern: "\\|[ ]*Changelog Text[ ]*\\|[ ]*(\\`?[\\w\\s<>]*\\`?)[ ]*\\|"
+          changelog_pattern: "\\|[ ]*Changelog Text[ ]*\\|[ ]*(\\`?[\\w\\s!@#$%:&`\'*+\\/=?^_`(){}<>~,]*\\`?)[ ]*\\|"
           default_changelog_text: "`<What would you write for the end user to understand the change>`"
           min_acceptable_changelog_string: "20"
 ```
