@@ -4,19 +4,22 @@ Want to provide some standards on your project? The pull request validator is he
 
 # Example Usage
 
-Here's an example of where we want our pull request description to have the prefix "JIRA-(some_number)" at minimum. (e.g. `JIRA-101 Fix Project Management`)
+Here's an example of where we want our pull request description to have 
 
 ```yaml
-name: `Pull Request Title Validator`
+name: 'Pull Request Description Validator'
 on:
   pull_request:
-    types: [opened, reopened, synchronize, edited]
+    types: [opened, reopened, edited]
 
 jobs:
-  require-valid-pr-title:
+  require-valid-pr-description:
     runs-on: ubuntu-latest
     steps:
+      - name: Validate Issues Description with changelog
       - uses: teebu/pr-description-validator@master
-        with:
-          pattern: 'JIRA-\d+.*'
+-       with: 
+          add_to_changelog_pattern: "\|[ ]+add to changelog[ ]+\|[ ]+(`?yes`?)[ ]+\||\|[ ]+add to changelog[ ]+\|[ ]+(`?no`?)[ ]+\|"
+          changelog_pattern: "\|[ ]*Changelog Text[ ]*\|[ ]*(\`?[\w\s<>]*\`?)[ ]*\|"
+          min_acceptable_changelog_string: "20"
 ```
