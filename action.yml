@@ -4,7 +4,7 @@ author: 'Teebu'
 inputs:
   add_to_changelog_pattern:
     required: false
-    default: "\\|[ ]+add to changelog[ ]+\\|[ ]+(`?yes`?)[ ]+\\||\\|[ ]+add to changelog[ ]+\\|[ ]+(`?no`?)[ ]+\\|"
+    default: "\\|[ ]+add to changelog[ ]+\\|[ ]+(`?yes`?|`?no`?)[ ]+\\|"
     description: "Should add to changelog option: YES or NO but not both"
   changelog_pattern:
     required: false

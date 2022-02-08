@@ -1,7 +1,7 @@
 import {reFound, reMatch} from '../src/validator'
 import {expect, test, describe} from '@jest/globals'
 
-const add_to_changelog_pattern = '\\|[ ]+add to changelog[ ]+\\|[ ]+(`?yes`?)[ ]+\\||\\|[ ]+add to changelog[ ]+\\|[ ]+(`?no`?)[ ]+\\|'
+const add_to_changelog_pattern = '\\|[ ]+add to changelog[ ]+\\|[ ]+(`?yes`?|`?no`?)[ ]+\\|'
 const changelog_pattern = '\\|[ ]*Changelog Text[ ]*\\|[ ]*(\\`?[\\w\\s<>]*\\`?)[ ]*\\|'
 
 describe("Test regex", () => {
@@ -55,6 +55,16 @@ describe("Test regex", () => {
     expect(reFound(inputStr, add_to_changelog_pattern)).toBe(true)
   });
 
+  test("it should not find and invalidate default add to change log yes/no option", () => {
+    const inputStr = `
+|                |                          |
+|----------------|------------------|
+|  Add To Changelog  |       \`YES\`/\`NO\`             |
+|  Changelog Text   |   \`<What would you write for the end user to understand the change>\`        |
+`
+    expect(reFound(inputStr, add_to_changelog_pattern)).toBe(false)
+  });
+
   test("it should find short changelog string with ticks", () => {
     const inputStr = `
 |                |                          |
@@ -73,5 +83,35 @@ describe("Test regex", () => {
 |  Changelog Text   |   Some description        |
 `
     expect(reMatch(inputStr, changelog_pattern)).toBe('Some description')
+  });
+
+  test("it should find 'no' for add to changelog with ticks", () => {
+    const inputStr = `
+|                |                          |
+|----------------|------------------|
+|  Add To Changelog  |       \`no\`             |
+|  Changelog Text   |   Some description        |
+`
+    expect(reMatch(inputStr, add_to_changelog_pattern)).toBe('`no`')
+  });
+
+  test("it should find and match 'no' for add to changelog without ticks", () => {
+    const inputStr = `
+|                |                          |
+|----------------|------------------|
+|  Add To Changelog  |       yes             |
+|  Changelog Text   |   Some description        |
+`
+    expect(reMatch(inputStr, add_to_changelog_pattern)).toBe('yes')
+  });
+
+  test("it should find 'no' for add to changelog without ticks", () => {
+    const inputStr = `
+|                |                          |
+|----------------|------------------|
+|  Add To Changelog  |       yes             |
+|  Changelog Text   |   Some description        |
+`
+    expect(reMatch(inputStr, add_to_changelog_pattern)).toBe('yes')
   });
 });

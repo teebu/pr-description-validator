@@ -23,7 +23,7 @@ jobs:
         uses: teebu/pr-description-validator@main
         with: 
           # optional defaults
-          add_to_changelog_pattern: "\|[ ]+add to changelog[ ]+\|[ ]+(`?yes`?)[ ]+\||\|[ ]+add to changelog[ ]+\|[ ]+(`?no`?)[ ]+\|"
+          add_to_changelog_pattern: "\\|[ ]+add to changelog[ ]+\\|[ ]+(`?yes`?|`?no`?)[ ]+\\|"
           changelog_pattern: "\|[ ]*Changelog Text[ ]*\|[ ]*(\`?[\w\s<>]*\`?)[ ]*\|"
           default_changelog_text: "`<What would you write for the end user to understand the change>`"
           min_acceptable_changelog_string: "20"

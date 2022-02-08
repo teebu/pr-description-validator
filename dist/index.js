@@ -45,21 +45,32 @@ function run() {
             const min_acceptable_changelog_string = core.getInput('min_acceptable_changelog_string');
             const add_to_changelog_pattern = core.getInput('add_to_changelog_pattern');
             const default_changelog_text = core.getInput('default_changelog_text');
-            if (!(0, validator_1.reFound)((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.body, add_to_changelog_pattern)) {
+            let check_default_changelog_string = true;
+            console.log('PR BODY:');
+            console.log((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.body);
+            let match = (0, validator_1.reMatch)((_b = github.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.body, add_to_changelog_pattern);
+            if (match) {
+                console.log('add_to_changelog_pattern found match:', match);
+                // don't check default string if should include in changelog is 'NO'
+                if (match.toUpperCase().includes('NO'))
+                    check_default_changelog_string = false;
+            }
+            else {
                 throw new Error('Pull request description missing YES or NO option for add to changelog.');
             }
-            console.log('PR BODY:');
-            console.log((_b = github.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.body);
-            const changelog_pattern = core.getInput('changelog_pattern');
-            const match = (0, validator_1.reMatch)((_c = github.context.payload.pull_request) === null || _c === void 0 ? void 0 : _c.body, changelog_pattern);
-            if (match) {
-                console.log('found match:', match);
-                if (match === default_changelog_text) {
-                    throw new Error('Pull request description found default changelog string.');
-                }
-                else if (match.length < parseInt(min_acceptable_changelog_string)) {
-                    // needs to meet minimum acceptable string length
-                    throw new Error('Pull request changelog string too short.');
+            // check default string if the answer to add to changelog is 'YES'
+            if (check_default_changelog_string) {
+                const changelog_pattern = core.getInput('changelog_pattern');
+                match = (0, validator_1.reMatch)((_c = github.context.payload.pull_request) === null || _c === void 0 ? void 0 : _c.body, changelog_pattern);
+                if (match) {
+                    console.log('found match:', match);
+                    if (match === default_changelog_text) {
+                        throw new Error('Pull request description found default changelog string.');
+                    }
+                    else if (match.length < parseInt(min_acceptable_changelog_string)) {
+                        // needs to meet minimum acceptable string length
+                        throw new Error('Pull request changelog string too short.');
+                    }
                 }
             }
         }
