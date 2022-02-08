@@ -39,7 +39,7 @@ const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const validator_1 = __nccwpck_require__(4618);
 function run() {
-    var _a, _b;
+    var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const min_acceptable_changelog_string = core.getInput('min_acceptable_changelog_string');
@@ -47,9 +47,12 @@ function run() {
             if (!(0, validator_1.reFound)((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.body, add_to_changelog_pattern)) {
                 throw new Error('Pull request description missing YES or NO option for add to changelog.');
             }
+            console.log('PR BODY:');
+            console.log((_b = github.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.body);
             const changelog_pattern = core.getInput('changelog_pattern');
-            const match = (0, validator_1.reMatch)((_b = github.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.body, changelog_pattern);
+            const match = (0, validator_1.reMatch)((_c = github.context.payload.pull_request) === null || _c === void 0 ? void 0 : _c.body, changelog_pattern);
             if (match) {
+                console.log('found match:', match);
                 if (match === '`What would you write for the end user to understand the change`') {
                     throw new Error('Pull request description found default changelog string.');
                 }

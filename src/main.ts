@@ -11,9 +11,13 @@ async function run(): Promise<void> {
       throw new Error('Pull request description missing YES or NO option for add to changelog.')
     }
 
+    console.log('PR BODY:')
+    console.log(github.context.payload.pull_request?.body)
+
     const changelog_pattern: string = core.getInput('changelog_pattern')
     const match: string | null = reMatch(github.context.payload.pull_request?.body, changelog_pattern)
     if (match) {
+      console.log('found match:', match)
       if (match === '`What would you write for the end user to understand the change`') {
         throw new Error('Pull request description found default changelog string.')
       } else if (match[1].length < parseInt(min_acceptable_changelog_string)) {
