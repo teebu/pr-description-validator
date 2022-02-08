@@ -35,7 +35,7 @@ async function run(): Promise<void> {
           throw new Error('Pull request description found default changelog string.')
         } else if (match.length < parseInt(min_acceptable_changelog_string)) {
           // needs to meet minimum acceptable string length
-          throw new Error('Pull request changelog string too short.')
+          throw new Error(`Pull request changelog string too short: ${parseInt(min_acceptable_changelog_string)}`)
         }
       } else {
         throw new Error('Pull request description error, changelog string not found.')
