@@ -39,7 +39,7 @@ const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const validator_1 = __nccwpck_require__(4618);
 function run() {
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const default_description_text = core.getInput('default_description_text');
@@ -49,12 +49,15 @@ function run() {
             let check_default_changelog_string = true;
             console.log('PR BODY:');
             console.log((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.body);
-            const found = (0, validator_1.reFound)((_b = github.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.body, default_description_text);
+            if (((_b = github.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.body) == null) {
+                throw new Error('Pull request description missing text. Please use the PR template.');
+            }
+            const found = (0, validator_1.reFound)((_c = github.context.payload.pull_request) === null || _c === void 0 ? void 0 : _c.body, default_description_text);
             if (found) {
                 console.log('found default description');
                 throw new Error('Pull request description using default description text.');
             }
-            let match = (0, validator_1.reMatch)((_c = github.context.payload.pull_request) === null || _c === void 0 ? void 0 : _c.body, add_to_changelog_pattern);
+            let match = (0, validator_1.reMatch)((_d = github.context.payload.pull_request) === null || _d === void 0 ? void 0 : _d.body, add_to_changelog_pattern);
             if (match) {
                 console.log('add_to_changelog_pattern found match:', match);
                 // don't check default string if should include in changelog is 'NO'
@@ -68,7 +71,7 @@ function run() {
             // check default string if the answer to add to changelog is 'YES'
             if (check_default_changelog_string) {
                 const changelog_pattern = core.getInput('changelog_pattern');
-                match = (0, validator_1.reMatch)((_d = github.context.payload.pull_request) === null || _d === void 0 ? void 0 : _d.body, changelog_pattern);
+                match = (0, validator_1.reMatch)((_e = github.context.payload.pull_request) === null || _e === void 0 ? void 0 : _e.body, changelog_pattern);
                 if (match) {
                     console.log('changelog_pattern found match:', match);
                     if (match === default_changelog_text) {

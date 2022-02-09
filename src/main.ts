@@ -13,6 +13,10 @@ async function run(): Promise<void> {
     console.log('PR BODY:')
     console.log(github.context.payload.pull_request?.body)
 
+    if (github.context.payload.pull_request?.body == null) {
+      throw new Error('Pull request description missing text. Please use the PR template.')
+    }
+
     const found: string | boolean = reFound(github.context.payload.pull_request?.body, default_description_text)
     if (found) {
       console.log('found default description')
