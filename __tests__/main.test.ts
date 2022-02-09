@@ -1,9 +1,9 @@
 import {reFound, reMatch} from '../src/validator'
 import {expect, test, describe} from '@jest/globals'
 
-const add_to_changelog_pattern = '\\|[ ]+add to changelog[ ]+\\|[ ]+(`?yes`?|`?no`?)[ ]+\\|'
-const changelog_pattern = '\\|[ ]*Changelog Text[ ]*\\|[ ]*(\\`?[\\w\\s!@#$%:&`\'*+\\/=?^_`(){}<>~,]*\\`?)[ ]*\\|'
-const default_description_test = 'What was changed and why was this change made, what does the reviewer need to know'
+const add_to_changelog_pattern = "\\|[ ]+add to changelog[ ]+\\|[ ]+(`?yes`?|`?no`?)[ ]+\\|"
+const changelog_pattern = "\\|[ ]*Changelog Text[ ]*\\|[ ]*(`?[\\w\\s!@#$%:&`\'*+\\/=?^_`()\\{\\}<>~,\\p{Extended_Pictographic}\\u{1F3FB}-\\u{1F3FF}\\u{1F9B0}-\\u{1F9B3}]*`?)[ ]*\\|"
+const default_description_test = "What was changed and why was this change made, what does the reviewer need to know"
 
 describe("Test regex", () => {
   test("it should fail to find valid changelog inclusion (default)", () => {
@@ -84,6 +84,16 @@ describe("Test regex", () => {
 |  Changelog Text   |   Some description        |
 `
     expect(reMatch(inputStr, changelog_pattern)).toBe('Some description')
+  });
+
+  test("it should find description with emojis string without ticks", () => {
+    const inputStr = `
+|                |                          |
+|----------------|------------------|
+|  Add To Changelog  |       \`no\`             |
+|  Changelog Text   |   Some 😊 description        |
+`
+    expect(reMatch(inputStr, changelog_pattern)).toBe('Some 😊 description')
   });
 
   test("it should find 'no' for add to changelog with ticks", () => {

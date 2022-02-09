@@ -102,12 +102,12 @@ run();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.reMatch = exports.reFound = void 0;
 function reFound(input = '', pattern) {
-    const regexPat = new RegExp(pattern, 'i');
+    const regexPat = new RegExp(pattern, 'iu');
     return input.search(regexPat) !== -1;
 }
 exports.reFound = reFound;
 function reMatch(input = '', pattern) {
-    const regexPat = new RegExp(pattern, 'i');
+    const regexPat = new RegExp(pattern, 'iu');
     const match = input.match(regexPat);
     return match && match[1].trim();
 }

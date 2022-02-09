@@ -8,7 +8,7 @@ inputs:
     description: "Should add to changelog option: YES or NO but not both"
   changelog_pattern:
     required: false
-    default: "\\|[ ]*Changelog Text[ ]*\\|[ ]*(\\`?[\\w\\s!@#$%:&`\'*+\\/=?^_`(){}<>~,]*\\`?)[ ]*\\|"
+    default: "\\|[ ]*Changelog Text[ ]*\\|[ ]*(`?[\\w\\s!@#$%:&`\'*+\\/=?^_`()\\{\\}<>~,\\p{Extended_Pictographic}\\u{1F3FB}-\\u{1F3FF}\\u{1F9B0}-\\u{1F9B3}]*`?)[ ]*\\|"
     description: "Changelog description regex"
   default_changelog_text:
     required: false
