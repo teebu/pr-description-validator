@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://https://github.com/teebu/pr-description-validator"
+    "url": "git+https://github.com/teebu/pr-description-validator"
   },
   "keywords": [
     "actions",
