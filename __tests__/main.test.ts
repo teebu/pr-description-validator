@@ -2,7 +2,7 @@ import {reFound, reMatch} from '../src/validator'
 import {expect, test, describe} from '@jest/globals'
 
 const add_to_changelog_pattern = "\\|[ ]+add to changelog[ ]+\\|[ ]+(`?yes`?|`?no`?)[ ]+\\|"
-const changelog_pattern = "\\|[ ]*Changelog Text[ ]*\\|[ ]*(`?[\\w\\s!@#$%:&`\'*+\\/=?^_`()\\{\\}<>~,\\p{Extended_Pictographic}\\u{1F3FB}-\\u{1F3FF}\\u{1F9B0}-\\u{1F9B3}]*`?)[ ]*\\|"
+const changelog_pattern = "\\|[ ]*Changelog Text[ ]*\\|[ ]*(`?[^\\|]*`?)[ ]*\\|"
 const default_description_test = "What was changed and why was this change made, what does the reviewer need to know"
 
 describe("Test regex", () => {
