@@ -26,7 +26,7 @@ jobs:
           # optional defaults
           default_description_text: "What was changed and why was this change made, what does the reviewer need to know"
           add_to_changelog_pattern: "\\|[ ]+add to changelog[ ]+\\|[ ]+(`?yes`?|`?no`?)[ ]+\\|"
-          changelog_pattern: "\\|[ ]*Changelog Text[ ]*\\|[ ]*(\\`?[\\w\\s!@#$%:&`\'*+\\/=?^_`(){}<>~,]*\\`?)[ ]*\\|"
+          changelog_pattern: "\\|[ ]*Changelog Text[ ]*\\|[ ]*(`?[\\w\\s!@#$%:&`\'*+\\/=?^_`()\\{\\}<>~,\\p{Extended_Pictographic}\\u{1F3FB}-\\u{1F3FF}\\u{1F9B0}-\\u{1F9B3}]*`?)[ ]*\\|"
           default_changelog_text: "`<What would you write for the end user to understand the change>`"
           min_acceptable_changelog_string: "20"
 ```
